@@ -1,7 +1,7 @@
 # Ideas
+
+Juego que combina las siguientes dinamicas:
 - Memorama
 - Secuencia de numeros en una matriz
 - Recorrer un camino oculto
-- Simon
-- Bingo de nombres
-
+- Memorizar palabras o claves (numeros de telefono, placas, etc)
