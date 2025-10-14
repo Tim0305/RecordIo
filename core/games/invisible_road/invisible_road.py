@@ -21,8 +21,6 @@ class InvisibleRoadGame():
             self.__board.append([0] * self.width)
         
         self.__init_road()
-        print(self.__road)
-        self.print_board()
 
     def __init_road(self):
         # Create the road randomly
@@ -73,8 +71,8 @@ class InvisibleRoadGame():
     def set_height(self, height):
         self.height = height 
     
-    def play(self, position):
-        if (position == self.__road[self.__current_position]):
+    def play(self, x, y):
+        if ((x, y) == self.__road[self.__current_position]):
             self.__current_position += 1
             return True
         else:

@@ -1,4 +1,4 @@
-from core.games.keywords import KeywordsGame
+from core.games.keywords.keywords import KeywordsGame
 
 class KeywordsScene():
     def __init__(self, player, length, n):

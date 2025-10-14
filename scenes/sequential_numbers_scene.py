@@ -1,8 +1,9 @@
-from core.games.invisible_road.invisible_road import InvisibleRoadGame
+from core.games.numbers.sequential_numbers import SequentialNumbersGame
 
-class InvisibleRoadScene:
-    def __init__(self, player, width, height):
-        self.game = InvisibleRoadGame(width, height)
+
+class SequentialNumbersScene():
+    def __init__(self, player, width, height, numbers):
+        self.game = SequentialNumbersGame(width, height, numbers)
         self.game.start()
 
         while True:
@@ -13,6 +14,7 @@ class InvisibleRoadScene:
                 print("You won!!!")
                 break
             else:
+                self.game.print_board()
                 x = int(input("X: "))
                 y = int(input("Y: "))
 

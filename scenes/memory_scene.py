@@ -1,8 +1,8 @@
-from core.games.invisible_road.invisible_road import InvisibleRoadGame
+from core.games.memory.memory import MemoryGame
 
-class InvisibleRoadScene:
+class MemoryScene():
     def __init__(self, player, width, height):
-        self.game = InvisibleRoadGame(width, height)
+        self.game = MemoryGame(width, height)
         self.game.start()
 
         while True:
@@ -13,10 +13,13 @@ class InvisibleRoadScene:
                 print("You won!!!")
                 break
             else:
-                x = int(input("X: "))
-                y = int(input("Y: "))
+                self.game.print_board()
+                x1 = int(input("X1: "))
+                y1 = int(input("Y1: "))
+                x2 = int(input("X2: "))
+                y2 = int(input("Y2: "))
 
-                if self.game.play(x, y):
+                if self.game.play(x1, y1, x2, y2):
                     print("Bien")
                 else:
                     player.decrement_life()
