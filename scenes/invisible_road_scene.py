@@ -13,6 +13,7 @@ class InvisibleRoadScene:
                 print("You won!!!")
                 break
             else:
+                self.game.print_board()
                 x = int(input("X: "))
                 y = int(input("Y: "))
 
