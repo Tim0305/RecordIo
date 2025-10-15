@@ -56,6 +56,13 @@ class InvisibleRoadGame(BoardGame):
     def play(self, x, y) -> bool:
         if self.is_over():
             return False
+
+        # Check if coordinates are valid
+        if not (0 <= x < self.width and 0 <= y < self.height):
+            print(f"Coordinates out of range: ({x}, {y})")
+            self._fails += 1
+            return False
+
         if (x, y) == self.__road[self.__current_position]:
             self.__current_position += 1
             return True

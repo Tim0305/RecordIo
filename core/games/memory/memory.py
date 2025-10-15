@@ -39,7 +39,6 @@ class MemoryGame(BoardGame):
             print(f"Coordinates out of range: ({x1}, {y1}) - ({x2}, {y2})")
             self._fails += 1
             return False
-            # raise ValueError("Coordinates out of range")
 
         if ((x1 != x2 or y1 != y2) and self._board[y1][x1] == self._board[y2][x2] and self._board[y1][x1] != -1):
             # Remove the card from the list

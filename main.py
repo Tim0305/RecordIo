@@ -11,5 +11,5 @@ if __name__ == "__main__":
     # Test games
     # scene = InvisibleRoadScene(player, 2, 2)
     # scene = KeywordsScene(player, 6, 3)
-    scene = MemoryScene(player, 4, 3)   
-    # scene = SequentialNumbersScene(player, 5, 5, 3)
+    # scene = MemoryScene(player, 4, 3)   
+    scene = SequentialNumbersScene(player, 5, 5, 3)
