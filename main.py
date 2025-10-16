@@ -2,6 +2,7 @@ import pygame
 
 from classes.player.player import Player
 from scenes.invisible_road.invisible_road_scene import InvisibleRoadScene
+from scenes.menu.menu_scene import MenuScene
 from scenes.scene.scene import SceneManager
 
 WIDTH = 1280
@@ -25,7 +26,7 @@ if __name__ == "__main__":
 
     # Scene manager
     scene_manager = SceneManager()
-    scene_manager.go_to(InvisibleRoadScene(player, 3, 3, screen, scene_manager))
+    scene_manager.go_to(MenuScene(player, screen, scene_manager))
 
     while running:
         # Pygame events
@@ -35,8 +36,8 @@ if __name__ == "__main__":
                 running = False
 
         # RENDER YOUR GAME HERE
-        scene_manager.scene.handle_events(events)
-        scene_manager.scene.draw()
+        scene_manager.get_current_scene().handle_events(events)
+        scene_manager.get_current_scene().draw()
 
         # call this method to update the screen everytime I have made changes (double buffering)
         pygame.display.flip()
