@@ -1,7 +1,6 @@
 import pygame
 
-from classes.player.player import Player
-from scenes.invisible_road.invisible_road_scene import InvisibleRoadScene
+from player.player import Player
 from scenes.menu.menu_scene import MenuScene
 from scenes.scene.scene import SceneManager
 
@@ -11,12 +10,6 @@ HEIGHT = 720
 if __name__ == "__main__":
     # Create the player
     player = Player()
-
-    # Test games
-    # scene = InvisibleRoadScene(player, 2, 2)
-    # scene = KeywordsScene(player, 6, 3)
-    # scene = MemoryScene(player, 4, 3)   
-    # scene = SequentialNumbersScene(player, 5, 5, 3)
 
     # Pygame setup
     pygame.init()
@@ -36,8 +29,9 @@ if __name__ == "__main__":
                 running = False
 
         # RENDER YOUR GAME HERE
-        scene_manager.get_current_scene().handle_events(events)
-        scene_manager.get_current_scene().draw()
+        scene = scene_manager.get_current_scene()
+        if scene != None:
+            scene.update(events)
 
         # call this method to update the screen everytime I have made changes (double buffering)
         pygame.display.flip()

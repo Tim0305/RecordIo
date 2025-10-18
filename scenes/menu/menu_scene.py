@@ -27,7 +27,7 @@ class MenuScene(Scene):
                     option = button.get_text()
 
                     if option == "Invisible Road":
-                        self.manager.go_to(InvisibleRoadScene(self.player, 3, 2, self.screen, self.manager))                    
+                        self.manager.go_to(InvisibleRoadScene(self.player, 5, 5, self.screen, self.manager))                    
     
     def draw(self):
         for button in self.__buttons:

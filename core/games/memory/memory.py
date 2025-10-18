@@ -15,6 +15,7 @@ class MemoryGame(BoardGame):
         self.__place_cards()
 
     def __init_cards(self) -> None:
+        self.__cards.clear()
         if len(self.__cards) == 0:
             number_of_cards = (self.width * self.height) // 2
 

@@ -13,10 +13,10 @@ class SequentialNumbersGame(BoardGame):
         super().start()
         self.__current_number = 0
         self._fails = 0
-        self.__sequency = []
         self.__place_numbers()
 
     def __place_numbers(self):
+        self.__sequency.clear()
         for i in range (self.__numbers):
             x, y = self._get_random_position()
             while self._board[y][x] != 0:

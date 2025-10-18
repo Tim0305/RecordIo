@@ -9,7 +9,7 @@ class KeywordsGame(Game):
 
     def __init__(self, length = 5, n = 3):
         super().__init__()
-        self.__keywords = []
+        self.__keywords = set()
         self.__length = length
         self.__number_of_keywords = n
         self.__current_key_index = 0
@@ -21,7 +21,7 @@ class KeywordsGame(Game):
         
     def __generate_keywords(self) -> None:
         self.__keywords = []
-        for _ in range(self.__number_of_keywords):
+        while len(self.__keywords) < self.__number_of_keywords:
             self.__keywords.append("".join(random.choice(self.__CHARACTERS) for _ in range(self.__length)))
 
     def set_length(self, length) -> None:

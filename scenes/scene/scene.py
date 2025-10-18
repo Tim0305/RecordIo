@@ -1,5 +1,3 @@
-import pygame
-
 class Scene():
     def __init__(self, screen, manager = None):
         self.manager = manager
@@ -16,6 +14,10 @@ class Scene():
 
     def draw(self):
         pass
+
+    def update(self, events):
+        self.draw()
+        self.handle_events(events)
 
 class SceneManager():
     def __init__(self):
