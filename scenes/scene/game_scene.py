@@ -12,7 +12,6 @@ class GameScene(Scene):
         # Convierte la imagen al mismo formato de la pantalla
         self._background = pygame.image.load(background_img).convert()
         self._background = pygame.transform.scale(self._background, self.screen.get_size())
-
         self._pixel_font_name = "assets/fonts/Jersey15-Regular.ttf"
         self._arcade_font_name = "assets/fonts/ka1.ttf"
         self.__show_message_time = 3000 # ms
@@ -29,12 +28,12 @@ class GameScene(Scene):
         text = "Lifes: " + str(self._player.get_life())
 
         # Render text
-        font = pygame.font.Font(self._pixel_font_name, 60)
+        font = pygame.font.Font(self._pixel_font_name, 80)
         life_text = font.render(text, True, (255, 255, 255))
 
         # Posicionar el texto
         screen_width, _ = self.screen.get_size()
-        x = screen_width - (life_text.get_size()[0] / 2) - 70
+        x = screen_width - (life_text.get_size()[0] / 2) - 50
         y = 50
         self.screen.blit(life_text, life_text.get_rect(center=(x, y)))
 
