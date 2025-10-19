@@ -2,9 +2,10 @@ import pygame
 
 class Button:
     def __init__(self, text: str, position: tuple[int, int]) -> None:
-        self.__button_color = (60, 60, 60)
-        self.__hover_color = (100, 100, 100)
-        self.__font_color = (255, 255, 255)
+        self.__button_color = (215, 121, 10)
+        self.__hover_color = (138, 77, 6)
+        self.__border_color = (74, 35, 25)
+        self.__font_color = (72, 31, 21)
         self.__font_size = 40
         self.__font_name = "assets/fonts/Jersey15-Regular.ttf"
         self.__font = None
@@ -23,7 +24,10 @@ class Button:
         color = self.__hover_color if self.__rect.collidepoint(mouse_pos) else self.__button_color
 
         # Dibujar el rectangulo del boton
+        # Relleno
         pygame.draw.rect(surface, color, self.__rect, border_radius=self.__border_radius)
+        # Borde
+        pygame.draw.rect(surface, self.__border_color, self.__rect, width=5, border_radius=self.__border_radius)
 
         # Agregar y centrar el texto al centro del rectangulo del boton
         surface.blit(self.__render_text, self.__render_text.get_rect(center=self.__rect.center))
