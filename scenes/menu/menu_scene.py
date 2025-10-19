@@ -3,6 +3,7 @@ import pygame
 from player.player import Player
 from scenes.components.button.button import Button
 from scenes.invisible_road.invisible_road_scene import InvisibleRoadScene
+from scenes.keywords.keywords_scene import KeywordsScene
 from scenes.scene.scene import Scene
 from scenes.scene.scene_manager import SceneManager
 
@@ -28,11 +29,17 @@ class MenuScene(Scene):
             for button in self.__buttons:
                 if (button.is_clicked(event)):
                     option = button.get_text()
-
-                    if option == "Invisible Road" and self.manager != None:
-                        # Reiniciar vidas del jugador
-                        self.__player.reset()
-                        self.manager.go_to(InvisibleRoadScene(self.__player, 5, 5, self.screen, self.manager))                    
+                    
+                    # Scenes
+                    if self.manager != None:
+                        if option == "Invisible Road": 
+                            # Reiniciar vidas del jugador
+                            self.__player.reset()
+                            self.manager.go_to(InvisibleRoadScene(self.__player, 5, 5, self.screen, self.manager))                    
+                        elif option == "Keywords":
+                            # Reiniciar vidas del jugador
+                            self.__player.reset()
+                            self.manager.go_to(KeywordsScene(self.__player, 6, 3, self.screen, self.manager))                    
     
     @override
     def draw(self) -> None:

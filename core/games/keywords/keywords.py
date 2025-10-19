@@ -8,10 +8,10 @@ class KeywordsGame(Game):
     # static attributes
     __CHARACTERS = string.ascii_letters + string.digits
 
-    def __init__(self, length: int = 5, n: int = 3) -> None:
+    def __init__(self, keyword_length: int = 5, n: int = 3) -> None:
         super().__init__()
         self.__keywords = []
-        self.__length = length
+        self.__keyword_length = keyword_length
         self.__number_of_keywords = n
         self.__current_key_index = 0
 
@@ -24,15 +24,15 @@ class KeywordsGame(Game):
     def __generate_keywords(self) -> None:
         self.__keywords.clear()
         while len(self.__keywords) < self.__number_of_keywords:
-            key = "".join(random.choice(self.__CHARACTERS) for _ in range(self.__length))
+            key = "".join(random.choice(self.__CHARACTERS) for _ in range(self.__keyword_length))
             if key not in self.__keywords:
                 self.__keywords.append(key)
 
-    def set_length(self, length) -> None:
-        self.__length = length
+    def set_keyword_length(self, keyword_length) -> None:
+        self.__keyword_length = keyword_length
 
-    def get_length(self) -> int:
-        return self.__length
+    def get_keyword_length(self) -> int:
+        return self.__keyword_length
 
     def set_number_of_keywords(self, n) -> None:
         self.__number_of_keywords = n
@@ -50,10 +50,10 @@ class KeywordsGame(Game):
             self.__current_key_index += 1
             return False 
     
-    def get_current_keyword(self) -> str | None:
+    def get_current_keyword(self) -> str:
         if self.__current_key_index < len(self.__keywords):
                 return self.__keywords[self.__current_key_index]
-        return None
+        return "" 
 
     @override
     def is_over(self) -> bool:

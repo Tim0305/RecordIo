@@ -9,7 +9,7 @@ from scenes.scene.scene_manager import SceneManager
 
 class InvisibleRoadScene(GameScene):
     def __init__(self, player: Player, board_width: int, board_height: int, screen, manager: SceneManager | None = None) -> None:
-        super().__init__(player, screen, manager, "assets/images/background_wood.png")
+        super().__init__(player, screen, manager, "assets/images/background_5.png")
         self.player = player
         self.game = InvisibleRoadGame(board_width, board_height)
         self.game.start()
