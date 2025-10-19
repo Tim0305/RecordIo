@@ -26,11 +26,11 @@ class InvisibleRoadScene(GameScene):
     @override
     def handle_events(self, events) -> None:
         if self.player.get_life() == 0:
-            print("Game Over")
+            self.show_game_over()
             if self.manager != None:
                 self.manager.go_back()
         elif self.game.is_over():
-            print("You Won")
+            self.show_win()
             if self.manager != None:
                 self.manager.go_back()
         else:

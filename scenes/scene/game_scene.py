@@ -13,14 +13,9 @@ class GameScene(Scene):
         self._background = pygame.image.load(background_img).convert()
         self._background = pygame.transform.scale(self._background, self.screen.get_size())
 
-        # Lifes
-        self._life_text = "Lifes: "
-        self._win_text = "You Won!!!"
-        self._game_over_text = "Game Over" 
-        self._font_name = "assets/fonts/Jersey15-Regular.ttf"
-        self._render_life_text = None
-        self._render_win_text = None
-        self._render_game_over_text = None
+        self._pixel_font_name = "assets/fonts/Jersey15-Regular.ttf"
+        self._arcade_font_name = "assets/fonts/ka1.ttf"
+        self.__show_message_time = 3000 # ms
 
     def draw(self) -> None:
         # Background
@@ -31,39 +26,42 @@ class GameScene(Scene):
 
     def __update_life_text(self):
         # Lifes text
-        self._life_text = "Lifes: " + str(self._player.get_life())
+        text = "Lifes: " + str(self._player.get_life())
 
         # Render text
-        font = pygame.font.Font(self._font_name, 60)
-        self._render_life_text = font.render(self._life_text, True, (255, 255, 255))
+        font = pygame.font.Font(self._pixel_font_name, 60)
+        life_text = font.render(text, True, (255, 255, 255))
 
         # Posicionar el texto
         screen_width, _ = self.screen.get_size()
-        x = screen_width - (self._render_life_text.get_size()[0] / 2) - 70
+        x = screen_width - (life_text.get_size()[0] / 2) - 70
         y = 50
-        self.screen.blit(self._render_life_text, self._render_life_text.get_rect(center=(x, y)))
+        self.screen.blit(life_text, life_text.get_rect(center=(x, y)))
 
     def show_win(self):
-        # Render text
-        font = pygame.font.Font(self._font_name, 120)
-        self._render_win_text = font.render(self._life_text, True, (255, 255, 255))
-
-        # Posicionar el texto
-        screen_width, _ = self.screen.get_size()
-        x = screen_width - (self._render_life_text.get_size()[0] / 2) - 70
-        y = 50
-        self.screen.blit(self._render_life_text, self._render_life_text.get_rect(center=(x, y)))
-
-        pass
+        self.__show_message("You Won")
 
     def show_game_over(self):
-        # Render text
-        font = pygame.font.Font(self._font_name, 60)
-        self._render_life_text = font.render(self._life_text, True, (255, 255, 255))
+        self.__show_message("Game Over")
 
-        # Posicionar el texto
-        screen_width, _ = self.screen.get_size()
-        x = screen_width - (self._render_life_text.get_size()[0] / 2) - 70
-        y = 50
-        self.screen.blit(self._render_life_text, self._render_life_text.get_rect(center=(x, y)))
-        pass
+    def __show_message(self, message):
+        # Render text
+        font = pygame.font.Font(self._arcade_font_name, 120)
+        game_over_text = font.render(message, True, (0, 0, 0))
+
+        screen_width, screen_height = self.screen.get_size()
+
+        # Rect
+        text_width, text_height = game_over_text.get_size()
+        rect = pygame.Rect(0, 0, text_width, text_height)
+        rect.center = (screen_width / 2, screen_height / 2)
+        rect.inflate_ip(60, 60) # Agranda el rect
+
+        # Mostrar el rext y texto
+        pygame.draw.rect(self.screen, (217, 219, 145), rect, border_radius=50)
+        self.screen.blit(game_over_text, game_over_text.get_rect(center=(screen_width / 2, screen_height / 2)))
+
+        # Esperar un tiempo
+        pygame.display.flip() # Actualizar la ventana
+        pygame.time.delay(self.__show_message_time)
+
