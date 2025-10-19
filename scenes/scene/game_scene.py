@@ -24,7 +24,7 @@ class GameScene(Scene):
         # Life text
         self.__update_life_text()
 
-    def __update_life_text(self):
+    def __update_life_text(self) -> None:
         # Lifes text
         text = "Lifes: " + str(self._player.get_life())
 
@@ -38,16 +38,16 @@ class GameScene(Scene):
         y = 50
         self.screen.blit(life_text, life_text.get_rect(center=(x, y)))
 
-    def show_win(self):
-        self.__show_message("You Won")
+    def show_win(self) -> None:
+        self.__show_message("You Won", (0, 0, 0), (217, 219, 145))
 
     def show_game_over(self):
-        self.__show_message("Game Over")
+        self.__show_message("Game Over", (218, 223, 242), (46, 75, 179))
 
-    def __show_message(self, message):
+    def __show_message(self, message: str, font_color: tuple[int, int, int], bg_color: tuple[int, int, int]) -> None:
         # Render text
         font = pygame.font.Font(self._arcade_font_name, 120)
-        game_over_text = font.render(message, True, (0, 0, 0))
+        game_over_text = font.render(message, True, font_color)
 
         screen_width, screen_height = self.screen.get_size()
 
@@ -58,7 +58,7 @@ class GameScene(Scene):
         rect.inflate_ip(60, 60) # Agranda el rect
 
         # Mostrar el rext y texto
-        pygame.draw.rect(self.screen, (217, 219, 145), rect, border_radius=50)
+        pygame.draw.rect(self.screen, bg_color, rect, border_radius=50)
         self.screen.blit(game_over_text, game_over_text.get_rect(center=(screen_width / 2, screen_height / 2)))
 
         # Esperar un tiempo
