@@ -8,6 +8,7 @@ class Button:
         self.__font_color = (72, 31, 21)
         self.__font_size = 40
         self.__font_name = "assets/fonts/Jersey15-Regular.ttf"
+        self.__sound_effect = pygame.mixer.Sound("assets/sounds/click_sound.mp3")
         self.__font = None
         self.__border_radius = 8
         self.__padding = 30
@@ -33,7 +34,13 @@ class Button:
         surface.blit(self.__render_text, self.__render_text.get_rect(center=self.__rect.center))
 
     def is_clicked(self, event) -> bool:
-        return event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and self.__rect.collidepoint(event.pos)
+        # button == 1 (click izquierdo)
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and self.__rect.collidepoint(event.pos):
+            self.__sound_effect.play()
+            return True
+        else:
+            return False
+
 
     def get_size(self) -> tuple[int, int]:
         return self.__rect.size

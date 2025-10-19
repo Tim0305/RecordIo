@@ -17,6 +17,11 @@ if __name__ == "__main__":
     clock = pygame.time.Clock()
     running = True
 
+    # Cursor img
+    cursor_img = pygame.image.load("assets/cursors/hand_cursor.png")
+    # Ocultar el cursor del sistema
+    pygame.mouse.set_visible(False)
+
     # Scene manager
     scene_manager = SceneManager()
     scene_manager.go_to(MenuScene(player, screen, scene_manager))
@@ -28,12 +33,16 @@ if __name__ == "__main__":
             if event.type == pygame.QUIT:
                 running = False
 
-
         # RENDER YOUR GAME HERE
         scene = scene_manager.get_current_scene()
         if scene != None:
             scene.update(events)
 
+        # Obtener posición del mouse
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        # Dibujar el cursor en esa posición
+        screen.blit(cursor_img, (mouse_x, mouse_y))        
+        
         # call this method to update the screen everytime I have made changes (double buffering)
         pygame.display.flip()
         # pygame.display.update()
