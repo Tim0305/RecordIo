@@ -7,7 +7,7 @@ class SequentialNumbersScene():
         self.game.start()
 
         while True:
-            if player.life == 0:
+            if player.get_life() == 0:
                 print("Game Over")
                 break
             elif self.game.is_over():

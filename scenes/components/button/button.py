@@ -1,12 +1,12 @@
 import pygame
 
 class Button:
-    def __init__(self, text, position):
+    def __init__(self, text: str, position: tuple[int, int]) -> None:
         self.__button_color = (60, 60, 60)
         self.__hover_color = (100, 100, 100)
-        self.__text_color = (255, 255, 255)
+        self.__font_color = (255, 255, 255)
         self.__font_size = 40
-        self.__text_font = "assets/fonts/Jersey15-Regular.ttf"
+        self.__font_name = "assets/fonts/Jersey15-Regular.ttf"
         self.__font = None
         self.__border_radius = 8
         self.__padding = 30
@@ -17,7 +17,7 @@ class Button:
         self.__load_font()
         self.__render()
 
-    def draw(self, surface):
+    def draw(self, surface) -> None:
         # Hover
         mouse_pos = pygame.mouse.get_pos()
         color = self.__hover_color if self.__rect.collidepoint(mouse_pos) else self.__button_color
@@ -28,40 +28,40 @@ class Button:
         # Agregar y centrar el texto al centro del rectangulo del boton
         surface.blit(self.__render_text, self.__render_text.get_rect(center=self.__rect.center))
 
-    def is_clicked(self, event):
+    def is_clicked(self, event) -> bool:
         return event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and self.__rect.collidepoint(event.pos)
 
-    def get_size(self):
+    def get_size(self) -> tuple[int, int]:
         return self.__rect.size
 
-    def get_text(self):
+    def get_text(self) -> str:
         return self.__text
 
-    def set_text(self, text):
+    def set_text(self, text: str) -> None:
         self.__text = text
         self.__render()
 
     # Posiciona el boton en el centro de position
-    def set_position(self, position):
+    def set_position(self, position: tuple[int, int]) -> None:
         self.__position = position
         self.__render()
 
-    def set_text_font(self, font):
-        self.__text_font = font
+    def set_font_name(self, font: str) -> None:
+        self.__font_name = font
         self.__load_font()
         self.__render()
 
-    def set_font_size(self, size):
+    def set_font_size(self, size: int) -> None:
         self.__font_size = size
         self.__load_font()
         self.__render()
 
-    def __load_font(self):
-        self.__font = pygame.font.Font(self.__text_font, self.__font_size)
+    def __load_font(self) -> None:
+        self.__font = pygame.font.Font(self.__font_name, self.__font_size)
         
-    def __render(self):
+    def __render(self) -> None:
         # Render text
-        self.__render_text = self.__font.render(self.__text, True, self.__text_color)
+        self.__render_text = self.__font.render(self.__text, True, self.__font_color)
 
         # Render rect
         self.__rect = self.__render_text.get_rect(center=self.__position)

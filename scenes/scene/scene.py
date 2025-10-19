@@ -1,35 +1,18 @@
-class Scene():
-    def __init__(self, screen, manager = None):
+class Scene:
+    def __init__(self, screen, manager = None) -> None:
         self.manager = manager
         self.screen = screen
 
-    def set_manager(self, manager):
+    def set_manager(self, manager) -> None:
         self.manager = manager
 
-    def set_screen(self, screen):
+    def set_screen(self, screen) -> None:
         self.screen = screen 
 
-    def handle_events(self, events):
-        pass
+    def handle_events(self, events) -> None: ...
 
-    def draw(self):
-        pass
+    def draw(self) -> None: ...
 
-    def update(self, events):
+    def update(self, events) -> None:
         self.draw()
         self.handle_events(events)
-
-class SceneManager():
-    def __init__(self):
-        self.scene_stack = []
-        self.current_scene = None
-
-    def go_to(self, scene):
-        self.scene_stack.append(self.current_scene)
-        self.current_scene = scene
-
-    def go_back(self):
-        self.current_scene = self.scene_stack.pop()
-
-    def get_current_scene(self):
-        return self.current_scene

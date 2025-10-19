@@ -1,3 +1,3 @@
 class Card():
-    def __init__(self, id = 0):
+    def __init__(self, id: int = 0) -> None:
         self.id = id

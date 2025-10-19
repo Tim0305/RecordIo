@@ -1,39 +1,47 @@
+from typing import override
 import pygame
+from player.player import Player
 from scenes.components.button.button import Button
 from scenes.invisible_road.invisible_road_scene import InvisibleRoadScene
 from scenes.scene.scene import Scene
+from scenes.scene.scene_manager import SceneManager
 
 class MenuScene(Scene):
     __OPTIONS = ["Invisible Road", "Keywords", "Memory", "Sequential Numbers"]
 
-    def __init__(self, player, screen, manager = None):
+    def __init__(self, player: Player, screen, manager: SceneManager | None = None) -> None:
         super().__init__(screen, manager)
         self.__buttons = []
-        self.player = player
+        self.__player = player
 
         # Background
         # Convierte la imagen al mismo formato de la pantalla
-        background = pygame.image.load("assets/images/background_wood.png").convert()
-        background = pygame.transform.scale(background, self.screen.get_size())
-        self.screen.blit(background, (0, 0))
+        self.__background = pygame.image.load("assets/images/RecordIo.png").convert()
+        self.__background = pygame.transform.scale(self.__background, self.screen.get_size())
 
         # Buttons
         self.__draw_buttons()
 
-    def handle_events(self, events):
+    @override
+    def handle_events(self, events) -> None:
         for event in events:
             for button in self.__buttons:
                 if (button.is_clicked(event)):
                     option = button.get_text()
 
-                    if option == "Invisible Road":
-                        self.manager.go_to(InvisibleRoadScene(self.player, 5, 5, self.screen, self.manager))                    
+                    if option == "Invisible Road" and self.manager != None:
+                        # Reiniciar vidas del jugador
+                        self.__player.reset()
+                        self.manager.go_to(InvisibleRoadScene(self.__player, 5, 5, self.screen, self.manager))                    
     
-    def draw(self):
+    @override
+    def draw(self) -> None:
+        self.screen.blit(self.__background, (0, 0))
+
         for button in self.__buttons:
             button.draw(self.screen)
 
-    def __draw_buttons(self):
+    def __draw_buttons(self) -> None:
         # Espaciado entre botones
         spacing = 40
         screen_width, screen_height = self.screen.get_size()
@@ -48,7 +56,7 @@ class MenuScene(Scene):
         total_width -= spacing
         
         x = (screen_width - total_width) // 2
-        y = screen_height // 2
+        y = screen_height * 0.8
 
         # Posicionar los botones
         for button in self.__buttons:

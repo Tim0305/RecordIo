@@ -1,12 +1,14 @@
 import random
+from typing import override
 from core.games.game.game import BoardGame
 
 class InvisibleRoadGame(BoardGame):
-    def __init__(self, board_width=3, board_height=3):
+    def __init__(self, board_width: int = 3, board_height: int = 3) -> None:
         super().__init__(board_width, board_height)
         self.__road = []
         self.__current_position = 0
 
+    @override
     def start(self) -> None:
         # Reset variables
         super().start()
@@ -53,16 +55,21 @@ class InvisibleRoadGame(BoardGame):
                 x = self.__road[-1][0]
                 y = self.__road[-1][1]
 
-    def play(self, x, y) -> bool:
+    def play(self, x: int, y: int) -> bool:
         if self.is_over():
             return False
 
-        # Check if coordinates are valid
+        # Posicion repetida
+        if (x, y) in self.__road[0:self.__current_position]:
+            return True
+
+        # Validar que las coordenadas sean validas
         if not (0 <= x < self._board_width and 0 <= y < self._board_height):
             print(f"Coordinates out of range: ({x}, {y})")
             self._fails += 1
             return False
 
+        # Si las coordenadas son correctas, aumentar __current_position
         if (x, y) == self.__road[self.__current_position]:
             self.__current_position += 1
             return True
@@ -70,10 +77,11 @@ class InvisibleRoadGame(BoardGame):
             self._fails += 1
             return False
 
+    @override
     def is_over(self) -> bool:
         return self.__current_position == len(self.__road)
 
-    def get_road(self) -> list[tuple]:
+    def get_road(self) -> list[tuple[int, int]]:
         return self.__road.copy()
 
     def get_current_position(self) -> int:

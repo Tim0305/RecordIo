@@ -6,7 +6,7 @@ class MemoryScene():
         self.game.start()
 
         while True:
-            if player.life == 0:
+            if player.get_life() == 0:
                 print("Game Over")
                 break
             elif self.game.is_over():
@@ -23,4 +23,4 @@ class MemoryScene():
                     print("Bien")
                 else:
                     player.decrement_life()
-                    print("Life: " + str(player.life))
+                    print("Life: " + str(player.get_life()))

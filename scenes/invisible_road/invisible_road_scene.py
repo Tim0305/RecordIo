@@ -1,14 +1,15 @@
+from typing import override
 import pygame
-import time
 
 from core.games.invisible_road.invisible_road import InvisibleRoadGame
+from player.player import Player
 from scenes.invisible_road.block import Block
-from scenes.keywords.keywords_scene import KeywordsScene
-from scenes.scene.scene import Scene
+from scenes.scene.game_scene import GameScene
+from scenes.scene.scene_manager import SceneManager
 
-class InvisibleRoadScene(Scene):
-    def __init__(self, player, board_width, board_height, screen, manager = None):
-        super().__init__(screen, manager)
+class InvisibleRoadScene(GameScene):
+    def __init__(self, player: Player, board_width: int, board_height: int, screen, manager: SceneManager | None = None) -> None:
+        super().__init__(player, screen, manager, "assets/images/background_wood.png")
         self.player = player
         self.game = InvisibleRoadGame(board_width, board_height)
         self.game.start()
@@ -19,58 +20,46 @@ class InvisibleRoadScene(Scene):
         self.__show_road_time = 5000 # ms
         self.__show_road_start_time = pygame.time.get_ticks()
         self.__road_visible = True
-
-        # Background
-        # Convierte la imagen al mismo formato de la pantalla
-        background = pygame.image.load("assets/images/background_wood.png").convert()
-        background = pygame.transform.scale(background, self.screen.get_size())
-        self.screen.blit(background, (0, 0))
-
         self.__draw_blocks()
         self.__show_road()
 
-    def handle_events(self, events):
-        # while True:
-        #     if player.life == 0:
-        #         print("Game Over")
-        #         break
-        #     elif self.game.is_over():
-        #         print("You won!!!")
-        #         break
-        #     else:
-        #         self.game.print_board()
-        #         x = int(input("X: "))
-        #         y = int(input("Y: "))
-        #
-        #         if self.game.play(x, y):
-        #             print("Bien")
-        #         else:
-        #             player.decrement_life()
-        #             print("Life: " + str(player.life))
+    @override
+    def handle_events(self, events) -> None:
+        if self.player.get_life() == 0:
+            print("Game Over")
+            if self.manager != None:
+                self.manager.go_back()
+        elif self.game.is_over():
+            print("You Won")
+            if self.manager != None:
+                self.manager.go_back()
+        else:
+            for event in events:
+                for i in range(len(self.__blocks)):
+                    for j in range(len(self.__blocks[i])):
+                        if self.__blocks[i][j].is_clicked(event):
+                            if self.game.play(j, i):
+                                self.__blocks[i][j].set_selected(True)
+                            else:
+                                self.player.decrement_life()
+                                print("Life: " + str(self.player.get_life()))
+        
+    @override
+    def draw(self) -> None:
+        super().draw()
 
-        for event in events:
-            for i in range(len(self.__blocks)):
-                for j in range(len(self.__blocks[i])):
-                    if self.__blocks[i][j].is_clicked(event):
-                        if self.game.play(j, i):
-                            self.__blocks[i][j].set_selected(True)
-                            print("Bien")
-                        else:
-                            self.player.decrement_life()
-                            print("Life: " + str(self.player.life))
-    
-    def draw(self):
         for i in range(len(self.__blocks)):
             for j in range(len(self.__blocks[i])):
                 self.__blocks[i][j].draw(self.screen)
 
-    def update(self, events):
+    @override
+    def update(self, events) -> None:
         if self.__road_visible:
             self.__show_road()
 
         super().update(events)
 
-    def __draw_blocks(self):
+    def __draw_blocks(self) -> None:
         self.__blocks.clear()
 
         # Centrar el tablero
@@ -90,17 +79,28 @@ class InvisibleRoadScene(Scene):
 
             for j in range(self.game.get_board_width()):
                 block = Block(self.__block_width, self.__block_height, (x, y))
+                
                 x += self.__block_width + self.__spacing
                 self.__blocks[i].append(block)
 
-    def __show_road(self):
+    def __show_road(self) -> None:
         road = self.game.get_road()
         if pygame.time.get_ticks() - self.__show_road_start_time < self.__show_road_time:
+            # Deshabilitar todos los bloques
+            for i in range(len(self.__blocks)):
+                for j in range(len(self.__blocks[i])):
+                    self.__blocks[i][j].disable()
+
             # Mostrar el camino
             for i in range(len(road)):
                 x, y = road[i]
                 self.__blocks[y][x].set_selected(True)
         else:
+            # Deshabilitar todos los bloques
+            for i in range(len(self.__blocks)):
+                for j in range(len(self.__blocks[i])):
+                    self.__blocks[i][j].enable()
+
             # Ocultar el camino
             for i in range(len(road)):
                 x, y = road[i]

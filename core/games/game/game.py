@@ -3,14 +3,13 @@
 import random
 
 class Game:
-    def __init__(self):
+    def __init__(self) -> None:
         self._fails = 0
 
     def start(self) -> None:
         self._fails = 0
     
-    def is_over(self) -> bool:
-        return False
+    def is_over(self) -> bool: ...
 
     def get_failed_attempts(self) -> int:
         return self._fails
@@ -18,7 +17,7 @@ class Game:
 class BoardGame(Game):
     EMPTY_CELL = 0
 
-    def __init__(self, board_width, board_height):
+    def __init__(self, board_width: int, board_height: int) -> None:
         super().__init__()
         self._board_width = board_width
         self._board_height = board_height
@@ -29,13 +28,13 @@ class BoardGame(Game):
         for _ in range(self._board_height):
             self._board.append([BoardGame.EMPTY_CELL] * self._board_width)
 
-    def set_board_width(self, board_width) -> None:
+    def set_board_width(self, board_width: int) -> None:
         self._board_width = board_width
 
     def get_board_width(self) -> int:
         return self._board_width
 
-    def set_board_height(self, board_height) -> None:
+    def set_board_height(self, board_height: int) -> None:
         self._board_height = board_height 
     
     def get_board_height(self) -> int:
@@ -53,7 +52,7 @@ class BoardGame(Game):
         # return a copy of the board
         return [row[:] for row in self._board]
 
-    def _get_random_position(self):
+    def _get_random_position(self) -> tuple[int, int]:
         x = random.randint(0, self._board_width - 1)
         y = random.randint(0, self._board_height - 1)
         return (x, y)
