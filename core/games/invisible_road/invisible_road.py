@@ -2,6 +2,7 @@ import random
 from typing import override
 from core.games.game.game import BoardGame
 
+
 class InvisibleRoadGame(BoardGame):
     def __init__(self, board_width: int = 3, board_height: int = 3) -> None:
         super().__init__(board_width, board_height)
@@ -60,7 +61,7 @@ class InvisibleRoadGame(BoardGame):
             return False
 
         # Posicion repetida
-        if (x, y) in self.__road[0:self.__current_position]:
+        if (x, y) in self.__road[0 : self.__current_position]:
             return True
 
         # Validar que las coordenadas sean validas
@@ -86,5 +87,3 @@ class InvisibleRoadGame(BoardGame):
 
     def get_current_position(self) -> int:
         return self.__current_position + 1
-
-    

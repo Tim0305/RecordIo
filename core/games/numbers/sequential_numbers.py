@@ -44,3 +44,9 @@ class SequentialNumbersGame(BoardGame):
     @override
     def is_over(self) -> bool:
         return self.__current_number == len(self.__sequency)
+
+    def get_sequency(self) -> list[tuple[int, int]]:
+        return self.__sequency.copy()
+
+    def get_current_number(self) -> int:
+        return self.__current_number
