@@ -4,12 +4,13 @@ from player.player import Player
 from scenes.components.button.button import Button
 from scenes.invisible_road.invisible_road_scene import InvisibleRoadScene
 from scenes.keywords.keywords_scene import KeywordsScene
+from scenes.misc.misc_scene import MiscScene
 from scenes.scene.scene import Scene
 from scenes.scene.scene_manager import SceneManager
 from scenes.sequential_numbers.sequential_numbers_scene import SequentialNumbersScene
 
 class MenuScene(Scene):
-    __OPTIONS = ["Invisible Road", "Keywords", "Sequential Numbers"]
+    __OPTIONS = ["Invisible Road", "Keywords", "Sequential Numbers", "Misc"]
 
     def __init__(self, player: Player, screen, manager: SceneManager | None = None) -> None:
         super().__init__(screen, manager)
@@ -44,12 +45,15 @@ class MenuScene(Scene):
                         elif option == "Sequential Numbers":
                             # Reiniciar vidas del jugador
                             self.__player.reset()
-                            self.manager.go_to(SequentialNumbersScene(self.__player, 5, 5, 8, self.screen, self.manager))                    
+                            self.manager.go_to(SequentialNumbersScene(self.__player, 5, 5, 8, self.screen, self.manager))
+                        elif option == "Misc":
+                            # Reiniciar vidas del jugador
+                            self.__player.reset()
+                            self.manager.go_to(MiscScene(self.__player, self.screen, self.manager))
     
     @override
     def draw(self) -> None:
         self.screen.blit(self.__background, (0, 0))
-
         for button in self.__buttons:
             button.draw(self.screen)
 
