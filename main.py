@@ -3,13 +3,15 @@ import pygame
 from player.player import Player
 from scenes.menu.menu_scene import MenuScene
 from scenes.scene.scene_manager import SceneManager
+from util.file import get_game_data
 
 WIDTH = 1280
 HEIGHT = 720
 
 if __name__ == "__main__":
-    # Create the player
-    player = Player()
+    # Create and init the player
+    data = get_game_data() # init data
+    player = Player(data["wins"], data["fails"])
 
     # Pygame setup
     pygame.init()

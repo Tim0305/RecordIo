@@ -25,6 +25,10 @@ class MenuScene(Scene):
         # Buttons
         self.__draw_buttons()
 
+        # Statistics
+        self.__font = pygame.font.Font("assets/fonts/Jersey15-Regular.ttf", 50)
+        self.__font_color = (231, 153, 15)
+
     @override
     def handle_events(self, events) -> None:
         super().handle_events(events)
@@ -59,6 +63,9 @@ class MenuScene(Scene):
         for button in self.__buttons:
             button.draw(self.screen)
 
+        # Statistics
+        self.__draw_statistics()
+
     def __draw_buttons(self) -> None:
         # Espaciado entre botones
         spacing = 40
@@ -81,4 +88,45 @@ class MenuScene(Scene):
             w, _ = button.get_size()
             button.set_position((x + w // 2, y))
             x += w + spacing
-            
+    
+    def __draw_statistics(self) -> None:
+        # Obtener datos del jugador
+        total_games = self.__player.get_wins() + self.__player.get_fails()
+        wins = self.__player.get_wins()
+        fails = self.__player.get_fails()
+
+        # Líneas de texto
+        lines = [
+            f"Total Games: {total_games}",
+            f"Wins: {wins}",
+            f"Fails: {fails}"
+        ]
+
+        line_spacing = 5  # separación entre líneas
+
+        # Calcular tamaño del rectángulo según el texto
+        ancho = max(self.__font.size(linea)[0] for linea in lines)
+        alto = len(lines) * self.__font.get_height() + (len(lines) - 1) * line_spacing
+
+        # Posición del rectángulo
+        screen_width, screen_height = self.screen.get_size()
+        x = screen_width - ancho - 80
+        y = (screen_height - alto) // 2
+        rect = pygame.Rect(x, y, ancho, alto)
+        rect.inflate_ip(60, 60)  # agranda rectángulo; puede cambiar width/height
+
+        # Dibujar rectángulo
+        pygame.draw.rect(self.screen, (133, 53, 22), rect, border_radius=50)  # relleno
+        pygame.draw.rect(self.screen, (56, 22, 9), rect, width=12, border_radius=50)  # borde
+
+        # Calcular posición vertical del bloque de texto centrado dentro del rect
+        total_text_height = len(lines) * self.__font.get_height() + (len(lines) - 1) * line_spacing
+        start_y = rect.top + (rect.height - total_text_height) // 2
+
+        # Dibujar las líneas
+        for i, linea in enumerate(lines):
+            render = self.__font.render(linea, True, self.__font_color)
+            text_rect = render.get_rect()
+            text_rect.left = rect.left + 25  # margen horizontal opcional
+            text_rect.top = start_y + i * (self.__font.get_height() + line_spacing)
+            self.screen.blit(render, text_rect)

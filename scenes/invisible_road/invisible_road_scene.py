@@ -5,6 +5,7 @@ from player.player import Player
 from scenes.components.block.block import Block
 from scenes.scene.game_scene import GameScene
 from scenes.scene.scene_manager import SceneManager
+from util.file import write_game_data
 from util.timer import Timer
 
 
@@ -33,6 +34,10 @@ class InvisibleRoadScene(GameScene):
     def handle_events(self, events) -> None:
         super().handle_events(events)
         if self._player.get_life() == 0:
+            # Actualizar el status del jugador
+            self._player.increment_fails()
+            write_game_data(self._player)
+
             # Mostrar el camino
             self.__show_road()
             self.draw()  # Actualizar la pantalla
@@ -40,6 +45,10 @@ class InvisibleRoadScene(GameScene):
             if self.manager != None:
                 self.manager.go_back()
         elif self.game.is_over():
+            # Actualizar el status del jugador
+            self._player.increment_wins()
+            write_game_data(self._player)
+
             self.show_win()
             if self.manager != None:
                 self.manager.go_back()

@@ -105,8 +105,12 @@ class GameScene(Scene):
         rect.center = (screen_width / 2, screen_height / 2)
         rect.inflate_ip(60, 60)  # Agranda el rect
 
-        # Mostrar el rext y texto
-        pygame.draw.rect(self.screen, bg_color, rect, border_radius=50)
+        # Crear superficie con transparencia usando rect
+        s = pygame.Surface((rect.width, rect.height), pygame.SRCALPHA)
+        pygame.draw.rect(s, (bg_color[0], bg_color[1], bg_color[2], 180), s.get_rect(), border_radius=50) # Alpha 180
+
+        # Dibujar el rext y texto
+        self.screen.blit(s, (rect.x, rect.y))
         self.screen.blit(
             game_over_text,
             game_over_text.get_rect(center=(screen_width / 2, screen_height / 2)),
