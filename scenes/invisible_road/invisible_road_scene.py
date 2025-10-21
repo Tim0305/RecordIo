@@ -31,6 +31,7 @@ class InvisibleRoadScene(GameScene):
 
     @override
     def handle_events(self, events) -> None:
+        super().handle_events(events)
         if self._player.get_life() == 0:
             # Mostrar el camino
             self.__show_road()
@@ -61,9 +62,9 @@ class InvisibleRoadScene(GameScene):
 
     @override
     def update(self, events) -> None:
+        super().update(events)
         if self.__road_visible:
             self.__reveal_road()
-        super().update(events)
 
     def __draw_blocks(self) -> None:
         self.__blocks.clear()

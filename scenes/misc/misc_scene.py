@@ -28,8 +28,3 @@ class MiscScene(Scene):
                     self.manager.go_to(SequentialNumbersScene(self.__player, 5, 5, 8, self.screen, self.manager))
             else:
                 self.manager.go_back()
-
-    @override
-    def handle_events(self, events) -> None:
-        for event in events:
-            pass

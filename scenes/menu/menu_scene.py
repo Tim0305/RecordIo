@@ -27,6 +27,7 @@ class MenuScene(Scene):
 
     @override
     def handle_events(self, events) -> None:
+        super().handle_events(events)
         for event in events:
             for button in self.__buttons:
                 if (button.is_clicked(event)):
@@ -53,6 +54,7 @@ class MenuScene(Scene):
     
     @override
     def draw(self) -> None:
+        super().draw()
         self.screen.blit(self.__background, (0, 0))
         for button in self.__buttons:
             button.draw(self.screen)

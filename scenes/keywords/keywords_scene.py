@@ -21,6 +21,7 @@ class KeywordsScene(GameScene):
 
     @override
     def handle_events(self, events):
+        super().handle_events(events)
         if self._player.get_life() == 0:
             self.show_game_over()
             if self.manager != None:
@@ -54,7 +55,6 @@ class KeywordsScene(GameScene):
     @override
     def draw(self) -> None:
         super().draw()
-
         if not self.game.is_over():
             if not self.__is_writing:
                 # mostrar la clave

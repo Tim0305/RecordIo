@@ -1,3 +1,4 @@
+from typing import override
 import pygame
 from player.player import Player
 from scenes.scene.scene import Scene
@@ -21,14 +22,52 @@ class GameScene(Scene):
         self.__arcade_font_name = "assets/fonts/ka1.ttf"
         self.__show_message_time = 3000  # ms
 
+        self.__sound_effect = pygame.mixer.Sound("assets/sounds/click_sound.mp3")
+
+        # exit
+        self.__exit_button_unselected_img = pygame.image.load(
+            "assets/images/exit.png"
+        ).convert_alpha()
+        self.__exit_button_unselected_img = pygame.transform.scale(
+            self.__exit_button_unselected_img, (100, 100)
+        )
+        self.__exit_button_hover_img = pygame.image.load(
+            "assets/images/exit_hover.png"
+        ).convert_alpha()
+        self.__exit_button_hover_img = pygame.transform.scale(
+            self.__exit_button_hover_img, (100, 100)
+        )
+        self.__exit_button = self.__exit_button_unselected_img
+        self.__exit_button_rect = self.__exit_button.get_rect(topleft=(50, 50))
+
+    @override
+    def handle_events(self, events) -> None:
+        super().handle_events(events)
+        for event in events:
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and self.__exit_button_rect.collidepoint(event.pos):
+                if self.manager != None:
+                    self.__sound_effect.play()
+                    self.manager.go_back()
+
+    @override
     def draw(self) -> None:
+        super().draw()
         # Background
         self.screen.blit(self._background, (0, 0))
 
-        # Life text
-        self.__update_life_text()
+        # exit button
+        mouse_pos = pygame.mouse.get_pos()
+        if self.__exit_button_rect.collidepoint(mouse_pos):
+            self.__exit_button = self.__exit_button_hover_img
+        else:
+            self.__exit_button = self.__exit_button_unselected_img
 
-    def __update_life_text(self) -> None:
+        self.screen.blit(self.__exit_button, self.__exit_button_rect.topleft)
+
+        # Life text
+        self.__draw_life_text()
+
+    def __draw_life_text(self) -> None:
         # Lifes text
         text = "Lifes: " + str(self._player.get_life())
 
@@ -45,7 +84,7 @@ class GameScene(Scene):
     def show_win(self) -> None:
         self.__show_message("You Won", (0, 0, 0), (217, 219, 145))
 
-    def show_game_over(self):
+    def show_game_over(self) -> None:
         self.__show_message("Game Over", (218, 223, 242), (46, 75, 179))
 
     def __show_message(
