@@ -50,7 +50,8 @@ class KeywordsScene(GameScene):
                     else:
                         # Agregar la letra presionada si is_writing es true respetando el tamano del keyword
                         if self.__is_writing and len(self.__user_input_text) < self.game.get_keyword_length():
-                            self.__user_input_text += event.unicode
+                            if event.unicode.isalnum(): # Agregar unicamente caracteres alfanumericos
+                                self.__user_input_text += event.unicode
 
     @override
     def draw(self) -> None:
