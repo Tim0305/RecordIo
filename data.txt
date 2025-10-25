@@ -1,3 +1,3 @@
-Total Games: 2
-Wins: 1
-Fails: 1
+Total Games: 37
+Wins: 18
+Fails: 19
